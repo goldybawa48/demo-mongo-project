@@ -17,7 +17,7 @@ export default function OverviewCard({ appName, version, uptimeSeconds }) {
 
       <p className="overview-blurb">
         This dashboard showcases a live connection between {appName || 'the application'} and its
-        database, with real-time health monitoring.
+        database, with real-time health monitoring and automatic recovery from outages.
       </p>
 
       <div className="overview-stats">
