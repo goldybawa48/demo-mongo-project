@@ -1,16 +1,14 @@
 name: Deploy to EC2
 
 on:
-  workflow_dispatch:
-    inputs:
-      project_dir:
-        description: 'Absolute path to the project directory on the EC2 instance'
-        required: false
-        default: '/home/ubuntu/demo-mongo-project'
+  push:
+    branches:
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: SSH into EC2, pull latest code, rebuild and restart containers
         uses: appleboy/ssh-action@v1.0.3
@@ -20,11 +18,13 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_SSH_PORT || 22 }}
           script_stop: true
+
           script: |
-            cd "${{ github.event.inputs.project_dir }}"
+            cd /home/ubuntu/demo-mongo-project
 
             git fetch origin
             git pull origin master
 
             sudo docker compose up -d --build
+
             sudo docker image prune -f
