@@ -6,7 +6,7 @@ on:
       project_dir:
         description: 'Absolute path to the project directory on the EC2 instance'
         required: false
-        default: '/home/ubuntu/mongo-db-projects'
+        default: '/home/ubuntu/demo-mongo-project'
 
 jobs:
   deploy:
@@ -26,5 +26,5 @@ jobs:
             git fetch origin
             git pull origin master
 
-            docker compose up -d --build
+            sudo docker compose up -d --build
             docker image prune -f
